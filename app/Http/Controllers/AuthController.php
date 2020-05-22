@@ -8,13 +8,30 @@ use Validator;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\Client as OClient;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
     public $successStatus = 200;
 
-    public function login(){
+    public function login()
+    {
+        // Check if a user with the specified email exists
+        $user = User::where('email',request('email'))->first();
+        if (!$user) {
+            return response()->json([
+                'error' => 'Wrong email or password',
+            ], 422);
+        }
+
+        // belongs to this user
+        if (!Hash::check(request('password'), $user->password)) {
+            return response()->json([
+                'error' => 'Wrong email or password',
+            ], 422);
+        }
+
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
             $userRole = $user->role()->first();
@@ -23,7 +40,7 @@ class UserController extends Controller
                 $this->scope = $userRole->role;
             }
 
-            $oClient = OClient::where('password_client', 1)->first();
+            $oClient = OClient::where('password_client', true)->first();
             return $this->getTokenAndRefreshToken($oClient, request('email'), request('password'), $this->scope);
         }else{
             return response()->json(['error' => 'Unauthorised'], 401);
@@ -46,13 +63,13 @@ class UserController extends Controller
         $input              = $request->all();
         $input['password']  = bcrypt($input['password']);
         $user               = User::create($input);
-        $oClient            = OClient::where('password_client', 1)->first();
+        $oClient            = OClient::where('password_client', true)->first();
 
         return $this->getTokenAndRefreshToken($oClient, $user->email, $password, 'user');
     }
 
     public function getTokenAndRefreshToken(OClient $oClient, $email, $password, $scope){
-        $oClient = OClient::where('password_client', 1)->first();
+        $oClient = OClient::where('password_client', true)->first();
         $http = new Client;
         $url = env('APP_URL').'/oauth/token';
 
@@ -89,7 +106,7 @@ class UserController extends Controller
 
     public function refreshToken(Request $request){
         $refresh_token = $request->header('Refreshtoken');
-        $oClient = OClient::where('password_client', 1)->first();
+        $oClient = OClient::where('password_client', true)->first();
         $http = new Client;
         $url = env('APP_URL').'/oauth/token';
 

@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('login', 'UserController@login');
-Route::post('register', 'UserController@register');
-Route::post('refreshtoken', 'UserController@refreshToken');
+Route::post('login', 'AuthController@login');
+Route::post('register', 'AuthController@register');
+Route::post('refreshtoken', 'AuthController@refreshToken');
 
-Route::get('/unauthorized', 'UserController@unauthorized');
+Route::get('/unauthorized', 'AuthController@unauthorized');
 Route::group(['middleware' => ['CheckClientCredentials', 'auth:api', 'role']], function(){
     // List users
     Route::middleware(['scope:admin,moderator,basic'])->get('/users', function (Request $request) {
@@ -61,6 +61,6 @@ Route::group(['middleware' => ['CheckClientCredentials', 'auth:api', 'role']], f
         return response()->json(['message'=>'User deleted successfully.']);
     });
 
-    Route::post('logout', 'UserController@logout');
-    Route::post('details', 'UserController@details');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('details', 'AuthController@details');
 });
