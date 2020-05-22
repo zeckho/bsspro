@@ -16,8 +16,15 @@ class UserController extends Controller
 
     public function login(){
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+            $user = Auth::user();
+            $userRole = $user->role()->first();
+            
+            if ($userRole) {
+                $this->scope = $userRole->role;
+            }
+
             $oClient = OClient::where('password_client', 1)->first();
-            return $this->getTokenAndRefreshToken($oClient, request('email'), request('password'));
+            return $this->getTokenAndRefreshToken($oClient, request('email'), request('password'), $this->scope);
         }else{
             return response()->json(['error' => 'Unauthorised'], 401);
         }
@@ -41,14 +48,14 @@ class UserController extends Controller
         $user               = User::create($input);
         $oClient            = OClient::where('password_client', 1)->first();
 
-        return $this->getTokenAndRefreshToken($oClient, $user->email, $password);
+        return $this->getTokenAndRefreshToken($oClient, $user->email, $password, 'user');
     }
 
-    public function getTokenAndRefreshToken(OClient $oClient, $email, $password){
+    public function getTokenAndRefreshToken(OClient $oClient, $email, $password, $scope){
         $oClient = OClient::where('password_client', 1)->first();
         $http = new Client;
         $url = env('APP_URL').'/oauth/token';
-        // $response = $http->request('POST', 'http://bsspro.test/oauth/token', [
+
         $response = $http->request('POST', $url, [
             'form_params' => [
                 'grant_type' => 'password',
@@ -56,7 +63,7 @@ class UserController extends Controller
                 'client_secret' => $oClient->secret,
                 'username' => $email,
                 'password' => $password,
-                'scope' => '*',
+                'scope' => $scope,
             ],
         ]);
 
@@ -65,7 +72,7 @@ class UserController extends Controller
     }
 
     public function details(){
-        $user = Auth::user();
+        $user = Auth::user()->with('role')->first();
         return response()->json($user, $this->successStatus);
     }
 
@@ -93,7 +100,7 @@ class UserController extends Controller
                     'refresh_token' => $refresh_token,
                     'client_id' => $oClient->id,
                     'client_secret' => $oClient->secret,
-                    'scope' => '*',
+                    'scope' => '',
                 ],
             ]);
                 

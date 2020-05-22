@@ -19,7 +19,48 @@ Route::post('register', 'UserController@register');
 Route::post('refreshtoken', 'UserController@refreshToken');
 
 Route::get('/unauthorized', 'UserController@unauthorized');
-Route::group(['middleware' => ['CheckClientCredentials', 'auth:api']], function(){
+Route::group(['middleware' => ['CheckClientCredentials', 'auth:api', 'role']], function(){
+    // List users
+    Route::middleware(['scope:admin,moderator,basic'])->get('/users', function (Request $request) {
+        return User::get();
+    });
+
+    // Add/Edit User
+    Route::middleware(['scope:admin,moderator'])->post('/user', function(Request $request) {
+        return User::create($request->all());
+    });
+
+    Route::middleware(['scope:admin,moderator'])->put('/user/{userId}', function(Request $request, $userId) {
+
+        try {
+            $user = User::findOrFail($userId);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'User not found.'
+            ], 403);
+        }
+
+        $user->update($request->all());
+
+        return response()->json(['message'=>'User updated successfully.']);
+    });
+
+    // Delete User
+    Route::middleware(['scope:admin'])->delete('/user/{userId}', function(Request $request, $userId) {
+
+        try {
+            $user = User::findOfFail($userId);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'User not found.'
+            ], 403);
+        }
+
+        $user->delete();
+
+        return response()->json(['message'=>'User deleted successfully.']);
+    });
+
     Route::post('logout', 'UserController@logout');
     Route::post('details', 'UserController@details');
 });
