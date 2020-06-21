@@ -3,64 +3,22 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::group(['middleware' => 'auth:api'], function(){
 
-Route::post('login', 'AuthController@login');
-Route::post('register', 'AuthController@register');
-Route::post('refreshtoken', 'AuthController@refreshToken');
+    Route::get('/permissions', 'RoleManager@permissionsIndex')
+        ->name('permissions.index')
+        ->middleware('permission:permission-list');
+    
+    Route::get('/roles', 'RoleManager@rolesIndex')
+        ->name('roles.index')
+        ->middleware('permission:role-list');
 
-Route::get('/unauthorized', 'AuthController@unauthorized');
-Route::group(['middleware' => ['CheckClientCredentials', 'auth:api', 'role']], function(){
-    // List users
-    Route::middleware(['scope:admin,moderator,basic'])->get('/users', function (Request $request) {
-        return User::get();
-    });
+    Route::get('/roles/{role}/assign/{user}', 'RoleManager@rolesAddUser')
+        ->name('roles.addUser')
+        ->middleware('permission:role-assign');
 
-    // Add/Edit User
-    Route::middleware(['scope:admin,moderator'])->post('/user', function(Request $request) {
-        return User::create($request->all());
-    });
-
-    Route::middleware(['scope:admin,moderator'])->put('/user/{userId}', function(Request $request, $userId) {
-
-        try {
-            $user = User::findOrFail($userId);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'message' => 'User not found.'
-            ], 403);
-        }
-
-        $user->update($request->all());
-
-        return response()->json(['message'=>'User updated successfully.']);
-    });
-
-    // Delete User
-    Route::middleware(['scope:admin'])->delete('/user/{userId}', function(Request $request, $userId) {
-
-        try {
-            $user = User::findOfFail($userId);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'message' => 'User not found.'
-            ], 403);
-        }
-
-        $user->delete();
-
-        return response()->json(['message'=>'User deleted successfully.']);
-    });
-
-    Route::post('logout', 'AuthController@logout');
-    Route::post('details', 'AuthController@details');
+    Route::get('/roles/{role}/unassign/{user}', 'RoleManager@rolesRemoveUser')
+        ->name('roles.removeUser')
+        ->middleware('permission:role-unassign');
+    
 });

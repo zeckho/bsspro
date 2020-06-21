@@ -2,15 +2,27 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
-use App\Role;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasRoles;
+
+    protected $guard_name = 'api';
+        
+    public function getCreatedDateAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->format('d/m/Y H:i');
+    }
+
+    public function getModifiedDateAttribute()
+    {
+        return Carbon::parse($this->attributes['updated_at'])->format('d/m/Y H:i');
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -38,8 +50,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function role(){
-        return $this->hasOne(Role::class);
-    }
 }

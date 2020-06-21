@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['role:superadmin|admin']], function () {
+    Route::resource('users', 'UserController');
+    Route::resource('roles','RoleController');
+});
+Route::group(['middleware' => ['role:superadmin|admin|trainer']], function () {
+    Route::resource('courses', 'CourseController');
+});
