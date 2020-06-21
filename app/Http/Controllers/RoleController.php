@@ -41,8 +41,9 @@ class RoleController extends Controller
     public function create()
     {
         $role = '';
+        $rolePermissions = [];
         $permission = Permission::get();
-        return view('roles.create',compact('permission', 'role'));
+        return view('roles.create',compact('permission', 'role', 'rolePermissions'));
     }
     
     /**

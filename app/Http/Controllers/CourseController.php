@@ -23,7 +23,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        $course = '';
+        return view('courses.create', compact('course'));
     }
 
     /**
@@ -34,7 +35,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

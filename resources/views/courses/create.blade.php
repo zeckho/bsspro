@@ -4,8 +4,8 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box">
-            @if ($courses)
-            {{ Breadcrumbs::render('courses.edit', $courses) }}
+            @if ($course)
+            {{ Breadcrumbs::render('courses.edit', $course) }}
             @else
             {{ Breadcrumbs::render('courses.create') }}
             @endif
@@ -43,36 +43,10 @@
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('email', 'Email') !!}
-                        {!! Form::email('email', old('email'), ['class' => 'form-control', 'placeholder' => 'Type email', 'required' => true, 'data-parsley-type' => 'email']) !!}
-
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('role', 'Role') !!}
-                        {!! Form::select('role', $roles, null, ['class' => 'form-control']) !!}
-
-                        @error('role')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('password', 'Password') !!}
-                        @role('superadmin')
-                        {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Type Password (leave it blank for the default password "secret")', 'required' => false]) !!}
-                        @else
-                        {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Type Password', 'required' => true]) !!}
-                        @endrole
-
-                        @error('password')
+                        {!! Form::checkbox('status', null, true, ['switch'=>'bool', 'id' => 'status']); !!}
+                        <label for="status" data-on-label="yes" data-off-label="no"></label>
+                        
+                        @error('status')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -95,11 +69,11 @@
 </div>
 @endsection
 
-@push('script')
+@push('scripts')
 <script src="{{ asset('plugins/parsleyjs/parsley.min.js') }}"></script>
 <script>
     $(document).ready(function() {
-            $('form').parsley();
-        });
+        //$('form').parsley();
+    });
 </script>
 @endpush

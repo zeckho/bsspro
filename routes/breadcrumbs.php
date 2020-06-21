@@ -31,6 +31,13 @@ Breadcrumbs::for('courses', function ($trail) {
     $trail->push('Courses', route('courses.index'));
 });
 
+// Home > Courses > Create Course
+Breadcrumbs::for('courses.create', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Courses', route('courses.index'));
+    $trail->push('Create Course', route('courses.create'));
+});
+
 // Home > Roles
 Breadcrumbs::for('roles', function ($trail) {
     $trail->parent('home');

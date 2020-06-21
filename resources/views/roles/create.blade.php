@@ -46,11 +46,32 @@
                     <div class="form-group">
                         {!! Form::label('permission', 'Permission') !!}
                         <br />
-                        @foreach($permission as $value)
-                            <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }} {{ $value->name }}</label>
-                            <br />
-                        @endforeach
-
+                        <input type="checkbox" id="switch6" switch="none">
+                        <label for="switch6" data-on-label="" data-off-label=""></label>
+                        <div class="row">
+                            @php
+                                $count = 1;
+                            @endphp
+                            @foreach($permission as $value)
+                                @php
+                                    if ($count%4 == 1)
+                                    {
+                                        echo "<div class='col-3'>";
+                                    }
+                                    // other stuff
+                                    echo "<label>". Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) ." ". $value->name ."</label>";
+                                    echo "<br />";
+                                    if ($count%4 == 0)
+                                    {
+                                        echo "</div>";
+                                    }
+                                    $count++;
+                                @endphp
+                            @endforeach
+                            @php
+                                if ($count%4 != 1) echo "</div>";
+                            @endphp
+                        </div>
                         @error('permission')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -61,9 +82,7 @@
                     <div class="form-group m-b-0">
                         <div>
                             {!! Form::submit('Submit', ['class' => 'btn btn-primary waves-effect waves-light']) !!}
-                            <button type="reset" class="btn btn-secondary waves-effect m-l-5">
-                                Cancel
-                            </button>
+                            {!! link_to_route('roles.index', 'Cancel', null, ['class' => 'btn btn-secondary waves-effect m-l-5']) !!}
                         </div>
                     </div>
                     {!! Form::close() !!}
@@ -74,11 +93,16 @@
 </div>
 @endsection
 
-@push('script')
+@push('scripts')
 <script src="{{ asset('plugins/parsleyjs/parsley.min.js') }}"></script>
 <script>
     $(document).ready(function() {
-            $('form').parsley();
-        });
+        $('form').parsley();
+
+    });
+    
+    $("#switch6").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
 </script>
 @endpush

@@ -84,7 +84,7 @@
                                 <div>
                                     {!! Form::submit('Submit', ['class' => 'btn btn-primary waves-effect waves-light']) !!}
                                     <button type="reset" class="btn btn-secondary waves-effect m-l-5">
-                                        Cancel
+                                        Reset
                                     </button>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
     </div>
 @endsection
 
-@push('script')
+@push('scripts')
     <script src="{{ asset('plugins/parsleyjs/parsley.min.js') }}"></script>
     <script>
         $(document).ready(function() {
