@@ -24,6 +24,11 @@ class User extends Authenticatable
         return Carbon::parse($this->attributes['updated_at'])->format('d/m/Y H:i');
     }
 
+    public function courses()
+    {
+        return $this->hasMany('App\Course');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

@@ -1,2 +1,3 @@
-<a href="{{ route('courses.edit',$query->id) }}" class="btn btn-sm btn-primary"><span class="mdi mdi-pencil">Edit</span></a>
-<button class="btn btn-sm btn-danger remove-course" data-id="{{ $query->id }}" data-action="{{ route('courses.destroy',$query->id) }}"><span class="mdi mdi-delete">Delete</span></button>
+<a href="{{ route('courses.show',$query->id) }}" class="btn btn-sm btn-info"><i class="mdi mdi-book-multiple"></i> <span>Lessons</span> <span class="badge badge-light"> {{ $query->lessons()->count() }}</span></a>
+<a href="{{ route('courses.edit',$query->id) }}" class="btn btn-sm btn-primary"><i class="mdi mdi-pencil"></i> <span>Edit</span></a>
+<button class="btn btn-sm btn-danger remove-course" data-id="{{ $query->id }}" data-action="{{ route('courses.destroy',$query->id) }}"><i class="mdi mdi-delete"></i><span>Delete</span></button>

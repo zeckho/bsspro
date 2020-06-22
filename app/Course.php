@@ -21,6 +21,11 @@ class Course extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function lessons()
+    {
+        return $this->hasMany('App\Lesson');
+    }
+
     public function getStartedDateAttribute()
     {
         return Carbon::parse($this->attributes['started_at'])->format('d/m/Y');

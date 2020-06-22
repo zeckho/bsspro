@@ -176,7 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Yajra\DataTables\DataTablesServiceProvider::class,
-        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+        Cohensive\Embed\EmbedServiceProvider::class,
     ],
 
     /*
@@ -230,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+        'Embed' => Cohensive\Embed\Facades\Embed::class,
     ],
 
 ];

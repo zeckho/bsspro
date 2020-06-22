@@ -40,6 +40,13 @@
                     </a>
                 </li>
                 @endcan
+                @can('lesson-list')
+                <li>
+                    <a href="{{ route('lessons.index') }}" class="waves-effect">
+                        <i class="mdi mdi-book-multiple"></i><span> Lessons </span>
+                    </a>
+                </li>
+                @endcan
             </ul>
 
         </div>

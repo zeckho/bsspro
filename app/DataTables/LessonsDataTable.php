@@ -2,14 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Course;
+use App\Lesson;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CoursesDataTable extends DataTable
+class LessonsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,7 +21,10 @@ class CoursesDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('user', function($query){
+            ->editColumn('course', function($query){
+                return $query->course->name;
+            })
+            ->editColumn('trainer', function($query){
                 return $query->user->name;
             })
             ->editColumn('status', function($query){
@@ -32,13 +35,7 @@ class CoursesDataTable extends DataTable
                 }
             })
             ->addColumn('action', function($query){
-                return view('courses.action', compact('query'));
-            })
-            ->editColumn('started_at', function($query){
-                return $query->started_date;
-            })
-            ->editColumn('finish_at', function($query){
-                return $query->finish_date;
+                return view('lessons.action', compact('query'));
             })
             ->rawColumns(['status']);
     }
@@ -46,10 +43,10 @@ class CoursesDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\CoursesDataTable $model
+     * @param \App\LessonsDataTable $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Course $model)
+    public function query(Lesson $model)
     {
         return $model->newQuery();
     }
@@ -62,7 +59,7 @@ class CoursesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('coursesdatatable-table')
+                    ->setTableId('lessonsdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->orderBy(1);
@@ -76,15 +73,14 @@ class CoursesDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('name'),
-            Column::computed('user'),
-            Column::make('started_at'),
-            Column::make('finish_at'),
-            Column::make('status'),
+            Column::make('title'),
+            Column::computed('course'),
+            Column::computed('trainer'),
+            Column::make('created_at'),
+            Column::computed('status'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                //   ->width(135)
                   ->addClass('text-center'),
         ];
     }
@@ -96,6 +92,6 @@ class CoursesDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Courses_' . date('YmdHis');
+        return 'Lessons_' . date('YmdHis');
     }
 }

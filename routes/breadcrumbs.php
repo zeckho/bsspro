@@ -45,6 +45,13 @@ Breadcrumbs::for('courses.edit', function ($trail, $course) {
     $trail->push('Edit Course', route('courses.edit', $course->id));
 });
 
+// Home > Courses > View Course
+Breadcrumbs::for('courses.show', function ($trail, $course) {
+    $trail->parent('home');
+    $trail->push('Courses', route('courses.index'));
+    $trail->push('View Course', route('courses.show', $course->id));
+});
+
 // Home > Roles
 Breadcrumbs::for('roles', function ($trail) {
     $trail->parent('home');
@@ -61,14 +68,28 @@ Breadcrumbs::for('roles.create', function ($trail) {
 // Home > Roles > Edit Role
 Breadcrumbs::for('roles.edit', function ($trail, $role) {
     $trail->parent('home');
-    $trail->push('Role', route('roles.index'));
+    $trail->push('Roles', route('roles.index'));
     $trail->push('Edit Role', route('roles.edit', $role->id));
 });
 
-// Home > About
-Breadcrumbs::for('about', function ($trail) {
+// Home > Lessons
+Breadcrumbs::for('lessons', function ($trail) {
     $trail->parent('home');
-    $trail->push('About', route('about'));
+    $trail->push('Lessons', route('lessons.index'));
+});
+
+// Home > Lessons > Create Lesson
+Breadcrumbs::for('lessons.create', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Lessons', route('lessons.index'));
+    $trail->push('Create Lesson', route('lessons.create'));
+});
+
+// Home > Lessons > Edit Lesson
+Breadcrumbs::for('lessons.edit', function ($trail, $lesson) {
+    $trail->parent('home');
+    $trail->push('Lessons', route('lessons.index'));
+    $trail->push('Edit Lesson', route('lessons.edit', $lesson->id));
 });
 
 // Home > Blog

@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "anhskohbo/no-captcha": "^3.2",
+        "cohensive/embed": "^5.5",
         "davejamesmiller/laravel-breadcrumbs": "5.x",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
