@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use Illuminate\Http\Request;
+use App\DataTables\CoursesDataTable;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -11,9 +14,9 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CoursesDataTable $dataTable)
     {
-        return view('courses.index');
+        return $dataTable->render('courses.index');
     }
 
     /**
@@ -35,7 +38,19 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['string'],
+        ]);
+
+        $request->merge([
+            'status' => $request->status=='on' ? 'enable' : 'disable',
+            'user_id' => Auth::id()
+        ]);
+
+        $course = Course::create($request->all());
+        
+        return redirect()->route('courses.index')->with(['status' => 'success', 'message' => 'Course has been created']);
     }
 
     /**
@@ -57,7 +72,8 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $course = Course::findOrFail($id);
+        return view('courses.create', compact('course'));
     }
 
     /**
@@ -69,7 +85,19 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['string'],
+        ]);
+
+        $course = Course::findOrFail($id);
+        $request->merge([
+            'status' => $request->status=='on' ? 'enable' : 'disable',
+            'user_id' => Auth::id()
+        ]);
+        $course->update($request->all());
+        
+        return redirect()->route('courses.index')->with(['status' => 'success', 'message' => 'Course has been updated']);
     }
 
     /**
@@ -80,6 +108,8 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $course->delete();
+        return redirect()->route('courses.index')->with(['status' => 'success', 'message' => 'Course has been deleted']);
     }
 }

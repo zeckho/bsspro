@@ -26,4 +26,7 @@ Route::group(['middleware' => ['role:superadmin|admin']], function () {
 });
 Route::group(['middleware' => ['role:superadmin|admin|trainer']], function () {
     Route::resource('courses', 'CourseController');
+    Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth']], function() {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
 });

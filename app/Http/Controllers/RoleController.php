@@ -110,7 +110,7 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
     
-        $role = Role::find($id);
+        $role = Role::findOrFail($id);
         $role->name = $request->input('name');
         $role->save();
     

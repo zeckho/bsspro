@@ -38,6 +38,13 @@ Breadcrumbs::for('courses.create', function ($trail) {
     $trail->push('Create Course', route('courses.create'));
 });
 
+// Home > Courses > Edit Course
+Breadcrumbs::for('courses.edit', function ($trail, $course) {
+    $trail->parent('home');
+    $trail->push('Courses', route('courses.index'));
+    $trail->push('Edit Course', route('courses.edit', $course->id));
+});
+
 // Home > Roles
 Breadcrumbs::for('roles', function ($trail) {
     $trail->parent('home');

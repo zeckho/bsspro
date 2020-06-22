@@ -16,7 +16,7 @@
     <link href="{{ asset('css/icons.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    @yield('styles')
+    @stack('styles')
 </head>
 
 <body class="enlarged" data-keep-enlarged="true">

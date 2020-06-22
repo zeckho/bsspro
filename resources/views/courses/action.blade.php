@@ -1,0 +1,2 @@
+<a href="{{ route('courses.edit',$query->id) }}" class="btn btn-sm btn-primary"><span class="mdi mdi-pencil">Edit</span></a>
+<button class="btn btn-sm btn-danger remove-course" data-id="{{ $query->id }}" data-action="{{ route('courses.destroy',$query->id) }}"><span class="mdi mdi-delete">Delete</span></button>

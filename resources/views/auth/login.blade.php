@@ -10,7 +10,7 @@
             </h3>
 
             <div class="p-3">
-                <form class="form-horizontal m-t-30" action="{{ route('login') }}" method="POST">
+                <form class="form-horizontal m-t-30" action="{{ route('login') }}" method="POST" id="loginForm">
                     @csrf
                     <div class="form-group">
                         <label for="username">Email</label>
@@ -32,17 +32,6 @@
                         @enderror
                     </div>
 
-                    <div class="form-group row{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
-                        <div class="col-6">
-                            {!! app('captcha')->display() !!}
-                            @if ($errors->has('g-recaptcha-response'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-
                     <div class="form-group row m-t-20">
                         <div class="col-6">
                             <div class="custom-control custom-checkbox">
@@ -54,9 +43,12 @@
                             </div>
                         </div>
                         <div class="col-6 text-right">
-                            <button type="submit" class="btn btn-primary w-md waves-effect waves-light">
-                                {{ __('Login') }}
-                            </button>
+                            {!! NoCaptcha::displaySubmit('loginForm', 'Login', ['class' => 'btn btn-primary w-md waves-effect waves-light']) !!}
+                            @if ($errors->has('g-recaptcha-response'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                            </span>
+                            @endif
                         </div>
                     </div>
 
