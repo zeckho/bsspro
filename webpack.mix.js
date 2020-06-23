@@ -14,4 +14,7 @@ mix.js("resources/js/app.js", "public/js")
     .sass("resources/sass/app.scss", "public/css")
     .sass("resources/sass/icons.scss", "public/css")
     .sass("resources/sass/style.scss", "public/css")
+    .copy("node_modules/video.js/dist/video.min.js", "public/js")
+    .copy("node_modules/videojs-youtube/dist/Youtube.min.js", "public/js")
+    .copy("node_modules/video.js/dist/video-js.min.css", "public/css")
     .version();

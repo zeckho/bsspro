@@ -29,6 +29,7 @@
         "jquery-sparkline": "^2.4.0",
         "metismenu": "^3.0.6",
         "sweetalert": "^2.1.2",
+        "videojs-youtube": "^2.6.1",
         "waves": "^0.1.1"
     }
 }

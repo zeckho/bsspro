@@ -58853,10 +58853,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! d:\MyProjects\MINE\CmsBss\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! d:\MyProjects\MINE\CmsBss\resources\sass\app.scss */"./resources/sass/app.scss");
-__webpack_require__(/*! d:\MyProjects\MINE\CmsBss\resources\sass\icons.scss */"./resources/sass/icons.scss");
-module.exports = __webpack_require__(/*! d:\MyProjects\MINE\CmsBss\resources\sass\style.scss */"./resources/sass/style.scss");
+__webpack_require__(/*! D:\MyProjects\MINE\bsspro\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! D:\MyProjects\MINE\bsspro\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\MyProjects\MINE\bsspro\resources\sass\icons.scss */"./resources/sass/icons.scss");
+module.exports = __webpack_require__(/*! D:\MyProjects\MINE\bsspro\resources\sass\style.scss */"./resources/sass/style.scss");
 
 
 /***/ })

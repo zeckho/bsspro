@@ -15,7 +15,9 @@
             <div class="card m-b-20">
                 <div class="card-body">
                     <h4 class="mt-0 header-title">List Lessons</h4>
+                    @can('lesson-create')
                     <a href="{{ route('lessons.create') }}" class="btn btn-primary waves-effect waves-light mb-4" data-toggle="button" aria-pressed="false"><i class="mdi mdi-book-multiple"></i> Create Lesson</a>
+                    @endcan
                     @csrf
                     @include('components.alert')
                     {{$dataTable->table()}}

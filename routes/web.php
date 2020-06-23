@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -27,8 +27,14 @@ Route::group(['middleware' => ['role:superadmin|admin']], function () {
 Route::group(['middleware' => ['role:superadmin|admin|trainer']], function () {
     Route::resource('courses', 'CourseController');
     Route::resource('lessons', 'LessonController');
+    Route::resource('classes', 'ClassController', ['except' => 'index']);
     Route::get('/lessons/create/{course?}', 'LessonController@create')->name('lessons.create');
     Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth']], function() {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
+});
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('classes', 'ClassController@index')->name('classes.index');
+    Route::get('classes/learn/{id}', 'ClassController@learn')->name('classes.learn');
+    Route::get('classes/view/{id}', 'ClassController@view')->name('classes.view');
 });

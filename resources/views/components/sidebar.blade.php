@@ -11,42 +11,58 @@
                         <i class="mdi mdi-home"></i><span class="badge badge-primary float-right">3</span> <span> Dashboard </span>
                     </a>
                 </li>
+                @can('class-list')
                 <li>
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-email"></i><span> Email <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
+                    <a href="{{ route('classes.index') }}" class="waves-effect">
+                        <i class="mdi mdi-book-open-page-variant"></i><span> Classes </span>
+                    </a>
+                </li>
+                @endcan
+
+                @hasanyrole('superadmin|admin')
+                <li>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-blinds"></i><span> Learnings <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
                     <ul class="submenu">
-                        <li><a href="email-inbox.html">Inbox</a></li>
-                        <li><a href="email-read.html">Email Read</a></li>
-                        <li><a href="email-compose.html">Email Compose</a></li>
+                        @can('course-list')
+                        <li>
+                            <a href="{{ route('courses.index') }}" class="waves-effect">
+                                <i class="mdi mdi-cellphone-link"></i><span> Manage Courses </span>
+                            </a>
+                        </li>
+                        @endcan
+                
+                        @can('lesson-list')
+                        <li>
+                            <a href="{{ route('lessons.index') }}" class="waves-effect">
+                                <i class="mdi mdi-book-multiple"></i><span> Manage Lessons </span>
+                            </a>
+                        </li>
+                        @endcan
                     </ul>
                 </li>
-                @can('user-list')
+
                 <li>
-                    <a href="{{ route('users.index') }}" class="waves-effect">
-                        <i class="mdi mdi-account-multiple"></i><span> Manage Users </span>
-                    </a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-settings"></i><span> Settings <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
+                    <ul class="submenu">
+                        @can('user-list')
+                        <li>
+                            <a href="{{ route('users.index') }}" class="waves-effect">
+                                <i class="mdi mdi-account-settings-variant"></i><span> Manage Users </span>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('role-list')
+                        <li>
+                            <a href="{{ route('roles.index') }}" class="waves-effect">
+                                <i class="mdi mdi-gavel"></i><span> Manage Roles </span>
+                            </a>
+                        </li>
+                        @endcan
+                    </ul>
                 </li>
-                @endcan
-                @can('role-list')
-                <li>
-                    <a href="{{ route('roles.index') }}" class="waves-effect">
-                        <i class="mdi mdi-gavel"></i><span> Manage Roles </span>
-                    </a>
-                </li>
-                @endcan
-                @can('course-list')
-                <li>
-                    <a href="{{ route('courses.index') }}" class="waves-effect">
-                        <i class="mdi mdi-cellphone-link"></i><span> Courses </span>
-                    </a>
-                </li>
-                @endcan
-                @can('lesson-list')
-                <li>
-                    <a href="{{ route('lessons.index') }}" class="waves-effect">
-                        <i class="mdi mdi-book-multiple"></i><span> Lessons </span>
-                    </a>
-                </li>
-                @endcan
+                @endhasanyrole
+
+
             </ul>
 
         </div>

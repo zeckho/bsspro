@@ -84,7 +84,6 @@ class CoursesDataTable extends DataTable
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                //   ->width(135)
                   ->addClass('text-center'),
         ];
     }

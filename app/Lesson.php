@@ -33,7 +33,12 @@ class Lesson extends Model
         if (!$embed)
             return '';
 
-        $embed->setAttribute(['width' => 400]);
+        $embed->setAttribute([
+            'width' => 400, 
+            'showinfo'=>0, 
+            'type'=>'text/html',
+            'controls'=>0
+        ]);
         return $embed->getHtml();
     }
 }

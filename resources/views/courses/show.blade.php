@@ -38,12 +38,22 @@
                         
                                 <div id="collapse{{$key}}" class="collapse" aria-labelledby="heading{{$key}}" data-parent="#accordion">
                                     <div class="card-body">
-                                        <p class="blockquote-footer text-muted m-b-20">Trainer <cite title="Source Title">{!! $lesson->user->name !!}</cite></p>
-                                        <div class="embed-responsive embed-responsive-16by9 m-b-20">
-                                            {!! $lesson->video_html !!}
-                                        </div>
-                                        <div>
-                                            {!! $lesson->content !!}
+                                        <div class="card m-b-30">
+                                            <video 
+                                                id="vid{{$key}}" 
+                                                class="video-js vjs-default-skin vjs-16-9"
+                                                controls
+                                                data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=1y_kfWUCFDQ&feature=emb_logo"}], "youtube": { "ytControls": 0, "showinfo": 0, "customVars": { "wmode": "transparent" } } }'>
+                                            </video>
+                                            <div class="card-body">
+                                                <h4 class="card-title font-16 mt-0">{!! $lesson->title !!}</h4>
+                                                <p class="card-text">
+                                                    <small class="text-muted">Trainer <cite title="Source Title">{!! $lesson->user->name !!}</cite></small>
+                                                </p>
+                                                <p class="card-text">
+                                                    {!! $lesson->content !!}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -56,3 +66,12 @@
     </div> <!-- end row -->
 </div>
 @endsection
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/video-js.min.css') }}">
+@endpush
+
+@push('scripts')
+    <script src="{{ asset('js/video.min.js') }}"></script>
+    <script src="{{ asset('js/Youtube.min.js') }}"></script>
+@endpush
