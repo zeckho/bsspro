@@ -36,7 +36,7 @@
                         {!! Form::label('course', 'Course') !!}
                         {!! Form::select('course_id', $courses, old('course_id'), ['class' => 'form-control select2', 'required' => true]) !!}
 
-                        @error('title')
+                        @error('course')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

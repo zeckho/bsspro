@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="page-title-box">
-            {{ Breadcrumbs::render('users') }}
+            {{ Breadcrumbs::render('libraries') }}
         </div>
     </div>
 </div>
@@ -14,9 +14,9 @@
         <div class="col-12">
             <div class="card m-b-20">
                 <div class="card-body">
-                    <h4 class="mt-0 header-title">List Users</h4>
-                    @can('user-create')
-                    <a href="{{ route('users.create') }}" class="btn btn-primary waves-effect waves-light mb-4" data-toggle="button" aria-pressed="false"><i class="mdi mdi-account-plus"></i> Create User</a>
+                    <h4 class="mt-0 header-title">List Libraries</h4>
+                    @can('library-create')
+                    <a href="{{ route('libraries.create') }}" class="btn btn-primary waves-effect waves-light mb-4" data-toggle="button" aria-pressed="false"><i class="mdi mdi-cellphone-link"></i> Create Library</a>
                     @endcan
                     @csrf
                     @include('components.alert')
@@ -32,18 +32,18 @@
 {{$dataTable->scripts()}}
 
 <script type="text/javascript">
-    $("body").on("click",".remove-user",function(){
+    $("body").on("click",".remove-library",function(){
             var current_object = $(this);
             swal({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this user!",
+                text: "Once deleted, you will not be able to recover this library!",
                 icon: "warning",
                 buttons: ["Cancel", "Delete!"],
                 dangerMode: true,
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    swal("Poof! User has been deleted!", {
+                    swal("Poof! Library has been deleted!", {
                         icon: "success",
                     });
                     var action = current_object.attr('data-action');

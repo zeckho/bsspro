@@ -1,4 +1,4 @@
-@can('role-list')
+@can('lesson-list')
 <a href="{{ route('courses.show',$query->id) }}" class="btn btn-sm btn-info"><i class="mdi mdi-book-multiple"></i> <span>Lessons</span> <span class="badge badge-light"> {{ $query->lessons()->count() }}</span></a>
 @endcan
 @can('course-edit')

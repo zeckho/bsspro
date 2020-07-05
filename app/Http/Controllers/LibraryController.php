@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+use App\Library;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\DataTables\CoursesDataTable;
-use Illuminate\Support\Facades\Auth;
+use App\DataTables\LibrariesDataTable;
 
-class CourseController extends Controller
+class LibraryController extends Controller
 {
 
     public function __construct()
@@ -21,9 +20,9 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(CoursesDataTable $dataTable)
+    public function index(LibrariesDataTable $dataTable)
     {
-        return $dataTable->render('courses.index');
+        return $dataTable->render('libraries.index');
     }
 
     /**
@@ -33,8 +32,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $course = '';
-        return view('courses.create', compact('course'));
+        $library = '';
+        return view('libraries.create', compact('library'));
     }
 
     /**
@@ -47,79 +46,73 @@ class CourseController extends Controller
     {
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['string'],
+            'status' => ['string'],
         ]);
 
         $request->merge([
             'status' => $request->status=='on' ? 'enable' : 'disable',
-            'slug' => Str::slug($request->title, '-'),
-            'user_id' => Auth::id()
+            'slug' => $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->title, '-'),
         ]);
 
-        $course = Course::create($request->all());
+        $library = Library::create($request->all());
         
-        return redirect()->route('courses.index')->with(['status' => 'success', 'message' => 'Course has been created']);
+        return redirect()->route('libraries.index')->with(['status' => 'success', 'message' => 'Library has been created']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Library  $library
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Library $library)
     {
-        $course = Course::findOrFail($id);
-        return view('courses.show', compact('course'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Library  $library
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Library $library)
     {
-        $course = Course::findOrFail($id);
-        return view('courses.create', compact('course'));
+        return view('libraries.create', compact('library'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Library  $library
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Library $library)
     {
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['string'],
+            'status' => ['string'],
         ]);
 
-        $course = Course::findOrFail($id);
         $request->merge([
             'status' => $request->status=='on' ? 'enable' : 'disable',
-            'slug' => Str::slug($request->title, '-'),
-            'user_id' => Auth::id()
+            'slug' => $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->title, '-'),
         ]);
-        $course->update($request->all());
+        $library->update($request->all());
         
-        return redirect()->route('courses.index')->with(['status' => 'success', 'message' => 'Course has been updated']);
+        return redirect()->route('libraries.index')->with(['status' => 'success', 'message' => 'Library has been updated']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Library  $library
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Library $library)
     {
-        $course = Course::findOrFail($id);
-        $course->delete();
-        return redirect()->route('courses.index')->with(['status' => 'success', 'message' => 'Course has been deleted']);
+        $library->delete();
+        return redirect()->route('libraries.index')->with(['status' => 'success', 'message' => 'Library has been deleted']);
     }
 }

@@ -13,7 +13,7 @@ class Lesson extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'video', 'content', 'status', 'course_id', 'user_id'
+        'title', 'slug', 'video', 'content', 'status', 'course_id', 'user_id'
     ];
 
     public function course()

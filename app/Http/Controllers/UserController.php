@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\DataTables\UsersDataTable;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
-use App\DataTables\UsersDataTable;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
     
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
 
     /**
@@ -139,5 +141,17 @@ class UserController extends Controller
         $user->removeRole($user->getRoleNames()[0]);
         $user->delete();
         return redirect()->route('users.index')->with(['status' => 'success', 'message' => 'User has been deleted']);
+    }
+
+    public function userOnlineStatus()
+    {
+        $users = User::all();
+
+        foreach ($users as $user) {
+            if (Cache::has('user-is-online-' . $user->id))
+                echo $user->name . " is online. Last seen: " . Carbon::parse($user->last_seen)->diffForHumans() . " <br>";
+            else
+                echo $user->name . " is offline. Last seen: " . Carbon::parse($user->last_seen)->diffForHumans() . " <br>";
+        }
     }
 }

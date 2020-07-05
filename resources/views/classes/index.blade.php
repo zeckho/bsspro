@@ -26,17 +26,15 @@
                         <div class="card m-b-30">
                             <img class="card-img-top img-fluid" src="{{ $course->image }}" alt="Card image cap">
                             <div class="card-body">
-                                <h4 class="card-title font-16 mt-0">{{ $course->name }}</h4>
+                                <h4 class="card-title font-16 mt-0">{{ $course->title }}</h4>
                                 <p class="card-text">{{ Str::limit($course->excerpt, 100) }}</p>
                                 <p class="card-text">
                                     <small class="text-muted">{!! \Carbon\Carbon::createFromTimeStamp(strtotime($course->created_at))->diffForHumans() !!}</small>
-                                    @can('get-class')
                                     @if ($course->user_courses && ($course->user_courses->user_id == Auth::id()))
-                                    {!! link_to_route('classes.view', 'START', $course->id,['class' => 'btn btn-outline-primary waves-effect waves-light float-right']) !!}
+                                        {!! link_to_route('classes.view', 'LEARN', $course->slug,['class' => 'btn btn-outline-primary waves-effect waves-light float-right']) !!}
                                     @else
-                                    <button class="btn btn-outline-info waves-effect waves-light float-right start-learn" data-id="{{ $course->id }}" data-action="{{ route('classes.learn',$course->id) }}"><span>GET CLASS</span></button>
+                                        {!! link_to_route('classes.view', 'VIEW', $course->slug,['class' => 'btn btn-outline-info waves-effect waves-light float-right']) !!}
                                     @endif
-                                    @endcan
                                 </p>
                             </div>
                         </div>
@@ -53,27 +51,3 @@
     </div> <!-- end row -->
 </div>
 @endsection
-
-@push('scripts')
-<script type="text/javascript">
-    $("body").on("click",".start-learn",function(){
-            var current_object = $(this);
-            swal({
-                title: "Are you sure?",
-                text: "Do yo want to learn this course?",
-                icon: "warning",
-                buttons: {
-                    cancel : 'Cancel',
-                    confirm : {text:'Okay!',className:'sweet-success'}
-                },
-                // dangerMode: true,
-            })
-            .then((response) => {
-                if (response) {
-                    var action = current_object.attr('data-action');
-                    window.location = action;
-                }
-            });
-        });
-</script>
-@endpush

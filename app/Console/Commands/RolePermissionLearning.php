@@ -54,6 +54,23 @@ class RolePermissionLearning extends Command
             'permission-create',
             'permission-edit',
             'permission-delete',
+            'course-list',
+            'course-create',
+            'course-edit',
+            'course-delete',
+            'lesson-list',
+            'lesson-create',
+            'lesson-edit',
+            'lesson-delete',
+            'class-list',
+            'class-create',
+            'class-edit',
+            'class-delete',
+            'library-list',
+            'library-create',
+            'library-edit',
+            'library-delete',
+            'get-course',
         ];
 
         $this->line('---------------------------Setting Up Roles:');

@@ -14,4 +14,9 @@ class UserCourse extends Model
     protected $fillable = [
         'user_id', 'course_id'
     ];
+
+    public function courses()
+    {
+        return $this->hasOne('App\Course', 'id');
+    }
 }

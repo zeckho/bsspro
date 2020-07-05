@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Course;
 use App\Lesson;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\DataTables\LessonsDataTable;
 
 class LessonController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +39,7 @@ class LessonController extends Controller
         if ($id) {
             $courses = $courses->whereId($id);
         }
-        $courses = $courses->pluck('name', 'id');
+        $courses = $courses->pluck('title', 'id');
         $trainers = User::role('trainer')->pluck('name', 'id');
         return view('lessons.create', compact('lesson', 'courses', 'trainers'));
     }
@@ -48,13 +55,13 @@ class LessonController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'video' => ['string', 'max:125'],
-            'content' => ['string'],
             'status' => ['string'],
             'course_id' => ['required', 'string'],
         ]);
 
         $request->merge([
-            'status' => $request->status=='on' ? 'enable' : 'disable'
+            'status' => $request->status=='on' ? 'enable' : 'disable',
+            'slug' => Str::slug($request->title, '-'),
         ]);
 
         $lesson = Lesson::create($request->all());
@@ -104,13 +111,13 @@ class LessonController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'video' => ['string', 'max:125'],
-            'content' => ['string'],
             'status' => ['string'],
             'course_id' => ['required', 'string'],
         ]);
 
         $request->merge([
-            'status' => $request->status=='on' ? 'enable' : 'disable'
+            'status' => $request->status=='on' ? 'enable' : 'disable',
+            'slug' => Str::slug($request->title, '-'),
         ]);
 
         $lesson = Lesson::findOrFail($id);

@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Lesson;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -22,7 +23,7 @@ class LessonsDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('course', function($query){
-                return $query->course->name;
+                return $query->course->title;
             })
             ->editColumn('trainer', function($query){
                 return $query->user->name;
@@ -33,6 +34,9 @@ class LessonsDataTable extends DataTable
                 } else {
                     return "<span class='badge badge-pill badge-danger'>".$query->status."</span>";
                 }
+            })
+            ->editColumn('created_at', function($query){
+                return Carbon::parse($query->started_date)->format('m/d/Y');
             })
             ->addColumn('action', function($query){
                 return view('lessons.action', compact('query'));

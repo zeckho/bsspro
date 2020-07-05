@@ -11,10 +11,10 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/metismenu.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('css/icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" defer>
+    <link href="{{ asset('css/metismenu.min.css') }}" rel="stylesheet" type="text/css" defer>
+    <link href="{{ asset('css/icons.css') }}" rel="stylesheet" defer>
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" defer>
 
     @stack('styles')
 </head>

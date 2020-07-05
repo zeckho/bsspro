@@ -15,7 +15,7 @@
             <div class="card m-b-20">
                 <div class="card-body">
                     <h4 class="mt-0 header-title">
-                        {!! $course->name !!}
+                        {!! $course->title !!}
                         <a href="{{ route('lessons.create',$course->id) }}" class="btn btn-primary waves-effect waves-light mb-4 float-right" data-toggle="button" aria-pressed="false"><i class="mdi mdi-book-multiple"></i> Create Lesson</a>
                     </h4>
                     <footer class="blockquote-footer text-muted m-b-30">
@@ -43,7 +43,7 @@
                                                 id="vid{{$key}}" 
                                                 class="video-js vjs-default-skin vjs-16-9"
                                                 controls
-                                                data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=1y_kfWUCFDQ&feature=emb_logo"}], "youtube": { "ytControls": 0, "showinfo": 0, "customVars": { "wmode": "transparent" } } }'>
+                                                data-setup='{ "techOrder": ["youtube", "html5"], "sources": [{ "type": "video/youtube", "src": "{{$lesson->video}}"}], "youtube": { "ytControls": 0, "showinfo": 0, "customVars": { "wmode": "transparent", "aspectRatio": "9:16" } } }'>
                                             </video>
                                             <div class="card-body">
                                                 <h4 class="card-title font-16 mt-0">{!! $lesson->title !!}</h4>

@@ -92,6 +92,26 @@ Breadcrumbs::for('lessons.edit', function ($trail, $lesson) {
     $trail->push('Edit Lesson', route('lessons.edit', $lesson->id));
 });
 
+// Home > Lessons
+Breadcrumbs::for('libraries', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Libraries', route('libraries.index'));
+});
+
+// Home > Lessons > Create Lesson
+Breadcrumbs::for('libraries.create', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Libraries', route('libraries.index'));
+    $trail->push('Create Library', route('libraries.create'));
+});
+
+// Home > Lessons > Edit Lesson
+Breadcrumbs::for('libraries.edit', function ($trail, $lesson) {
+    $trail->parent('home');
+    $trail->push('Libraries', route('libraries.index'));
+    $trail->push('Edit Library', route('libraries.edit', $lesson->id));
+});
+
 // Home > Blog
 Breadcrumbs::for('blog', function ($trail) {
     $trail->parent('home');

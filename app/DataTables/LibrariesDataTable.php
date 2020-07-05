@@ -2,14 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Course;
+use App\Library;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CoursesDataTable extends DataTable
+class LibrariesDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,9 +21,6 @@ class CoursesDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('user', function($query){
-                return $query->user->name;
-            })
             ->editColumn('status', function($query){
                 if ($query->status == 'enable') {
                     return "<span class='badge badge-pill badge-primary'>".$query->status."</span>";
@@ -32,7 +29,7 @@ class CoursesDataTable extends DataTable
                 }
             })
             ->addColumn('action', function($query){
-                return view('courses.action', compact('query'));
+                return view('libraries.action', compact('query'));
             })
             ->editColumn('started_at', function($query){
                 return $query->started_date;
@@ -46,10 +43,10 @@ class CoursesDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\CoursesDataTable $model
+     * @param \App\LibrariesDataTable $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Course $model)
+    public function query(Library $model)
     {
         return $model->newQuery();
     }
@@ -62,7 +59,7 @@ class CoursesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('coursesdatatable-table')
+                    ->setTableId('librariesdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->orderBy(1);
@@ -77,7 +74,6 @@ class CoursesDataTable extends DataTable
     {
         return [
             Column::make('title'),
-            Column::computed('user'),
             Column::make('started_at'),
             Column::make('finish_at'),
             Column::make('status'),
@@ -95,6 +91,6 @@ class CoursesDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Courses_' . date('YmdHis');
+        return 'Libraries_' . date('YmdHis');
     }
 }

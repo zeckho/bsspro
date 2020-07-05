@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ClassController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +37,7 @@ class ClassController extends Controller
         
         UserCourse::create($data);
 
-        return view('classes.view');
+        return redirect()->route('classes.view', $course->slug);
     }
 
     public function create()
@@ -95,9 +101,17 @@ class ClassController extends Controller
         //
     }
 
-    public function view($id)
+    public function view($slug)
     {
-        $courses = Course::whereId($id)->first();
+        $courses = Course::whereSlug($slug)->with('user_courses')->first();
+        // dd($courses);
         return view('classes.view',compact('courses'));
+    }
+
+    public function myClasses()
+    {
+        $courses = UserCourse::where('user_id', Auth::id())->with('courses')->get();
+        // dd($courses);
+        return view('classes.myclass',compact('courses'));
     }
 }
