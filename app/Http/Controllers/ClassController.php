@@ -103,14 +103,15 @@ class ClassController extends Controller
 
     public function view($slug)
     {
-        $courses = Course::whereSlug($slug)->with('user_courses')->first();
-        // dd($courses);
+        $courses = Course::whereSlug($slug)->with(['user_courses' => function ($query) {
+            $query->where('user_id', Auth::id());
+        }])->first();
         return view('classes.view',compact('courses'));
     }
 
     public function myClasses()
     {
-        $courses = UserCourse::where('user_id', Auth::id())->with('courses')->get();
+        $courses = UserCourse::where('user_id', Auth::id())->with('course')->get();
         // dd($courses);
         return view('classes.myclass',compact('courses'));
     }

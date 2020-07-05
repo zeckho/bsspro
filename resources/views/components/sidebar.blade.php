@@ -23,7 +23,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('libraries.index') }}" class="waves-effect">
+                    <a href="{{ route('libraries.list') }}" class="waves-effect">
                         <i class="mdi mdi-buffer"></i><span> Library </span>
                     </a>
                 </li>

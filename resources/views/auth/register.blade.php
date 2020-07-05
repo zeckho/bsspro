@@ -6,13 +6,11 @@
         <div class="card-body">
 
             <h3 class="text-center m-0">
-                <a href="index.html" class="logo logo-admin"><img src="{{ asset('images/logo.png') }}" height="30" alt="logo"></a>
+                <a href="index.html" class="logo logo-admin"><img src="{{ asset('images/logo.png') }}" height="70" alt="logo"></a>
             </h3>
 
             <div class="p-3">
-                <h4 class="text-muted font-18 m-b-5 text-center">Free Register</h4>
-                <p class="text-muted text-center">Get your free Agroxa account now.</p>
-
+                
                 <form class="form-horizontal m-t-30" action="{{ route('register') }}" method="POST">
                     @csrf
                     <div class="form-group">
@@ -52,6 +50,15 @@
                         <label for="userpassword">{{ __('Confirm Password') }}</label>
                         
                         <input id="password-confirm" type="password" placeholder="Enter confirm password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                    </div>
+
+                    <div class="form-group">
+                        {!! NoCaptcha::display() !!}
+                        @if ($errors->has('g-recaptcha-response'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                        </span>
+                        @endif
                     </div>
 
                     <div class="form-group row m-t-20">

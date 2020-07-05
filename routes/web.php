@@ -42,4 +42,6 @@ Route::group(['middleware' => ['auth', 'role:user|superadmin']], function () {
     Route::get('/myclass', 'ClassController@myClasses')->name('classes.myClasses');
     Route::get('classes/learn/{id}', 'ClassController@learn')->name('classes.learn');
     Route::get('classes/view/{id}', 'ClassController@view')->name('classes.view');
+
+    Route::get('library', 'LibraryController@list')->name('libraries.list');
 });

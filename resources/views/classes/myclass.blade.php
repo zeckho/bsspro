@@ -14,7 +14,7 @@
         <div class="col-12">
             <div class="card m-b-20">
                 <div class="card-body">
-                    <h4 class="mt-0 header-title">List Classes</h4>
+                    <h4 class="mt-0 header-title">Trainig Saya</h4>
                     @include('components.alert')
                     @if($courses->count() > 0)
                         @foreach ($courses as $key => $course)
@@ -25,13 +25,13 @@
                                             <div class="card-deck">
                                                 @endif
                                                 <div class="card m-b-30">
-                                                    <img class="card-img-top img-fluid" src="{{ $course->courses->image }}" alt="Card image cap">
+                                                    <img class="card-img-top img-fluid" src="{{ $course->course->image }}" alt="Card image cap">
                                                     <div class="card-body">
-                                                        <h4 class="card-title font-16 mt-0">{{ $course->courses->title }}</h4>
-                                                        <p class="card-text">{{ Str::limit($course->courses->excerpt, 100) }}</p>
+                                                        <h4 class="card-title font-16 mt-0">{{ $course->course->title }}</h4>
+                                                        <p class="card-text">{{ Str::limit($course->course->excerpt, 100) }}</p>
                                                         <p class="card-text">
-                                                            <small class="text-muted">{!! \Carbon\Carbon::createFromTimeStamp(strtotime($course->courses->created_at))->diffForHumans() !!}</small>
-                                                            {!! link_to_route('classes.view', 'LEARN', $course->courses->slug,['class' => 'btn btn-outline-primary waves-effect waves-light float-right']) !!}
+                                                            <small class="text-muted">{!! \Carbon\Carbon::createFromTimeStamp(strtotime($course->course->created_at))->diffForHumans() !!}</small>
+                                                            {!! link_to_route('classes.view', 'LEARN', $course->course->slug,['class' => 'btn btn-outline-primary waves-effect waves-light float-right']) !!}
                                                         </p>
                                                     </div>
                                                 </div>

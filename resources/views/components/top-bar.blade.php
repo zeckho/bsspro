@@ -4,10 +4,10 @@
     <div class="topbar-left">
         <a href="index.html" class="logo">
             <span>
-                <img src="{{ asset('images/logo.png') }}" alt="" height="24">
+                <img src="{{ asset('images/logo.png') }}" alt="" height="51">
             </span>
             <i>
-                <img src="{{ asset('images/logo-sm.png') }}" alt="" height="22">
+                <img src="{{ asset('images/logo.png') }}" alt="" height="24">
             </i>
         </a>
     </div>
